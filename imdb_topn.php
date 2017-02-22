@@ -10,7 +10,7 @@ if (PHP_SAPI === 'cli') {
     } elseif (sizeof($argv) > 2) {
         $numberOfMovies = $argv[1];
         $actorName = $argv[2];
-        $actorMovie = array();
+        $actorMovie = "";
     } elseif (sizeof($argv) == 1) {
         $numberOfMovies = 250;
     }
@@ -18,7 +18,7 @@ if (PHP_SAPI === 'cli') {
     $numberOfMovies = $_GET['arg1'];
     if (isset($_GET['arg2'])) {
         $actorName = $_GET['arg2'];
-        $actorMovie = array();
+        $actorMovie = "";
     }
 }
 
@@ -44,8 +44,8 @@ while ($count < $numberOfMovies) {
         $actors = explode(',', $actors);
         foreach ($actors as $actor) {
             if ($actor == ' ' . $actorName) {
-                $actorMovie[$actorName] = "";
-                $actorMovie[$actorName] = $actorMovie[$actorName] . ',' . $data->textContent;
+
+                $actorMovie = $actorMovie . ',' . $data->textContent;
             }
         }
     }
@@ -55,9 +55,9 @@ while ($count < $numberOfMovies) {
 
 //Displaying the name of movies based on actor.
 if (isset($actorName)) {
-    if (isset($actorMovie[$actorName])) {
+    if (isset($actorMovie) && !empty($actorMovie)) {
         echo "\n\nMovie " . $actorName . " played in :\n";
-        $movies = explode(",", $actorMovie[$actorName]);
+        $movies = explode(",", $actorMovie);
         $count = 1;
         foreach ($movies as $singleMovie) {
             if ($count != 1)
