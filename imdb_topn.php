@@ -1,4 +1,5 @@
 <?php
+
 //Script is made for both command line and web browser.
 //For command line "php imdb_topn.php 3 "Morgan Freeman"".
 //For web browser url is http://localhost/imdb_topn.php?arg1=3&arg2=Morgan Freeman
@@ -10,7 +11,7 @@ if (PHP_SAPI === 'cli') {
         $numberOfMovies = $argv[1];
         $actorName = $argv[2];
         $actorMovie = array();
-    }elseif(sizeof($argv)==1){
+    } elseif (sizeof($argv) == 1) {
         $numberOfMovies = 250;
     }
 } else {
@@ -42,29 +43,28 @@ while ($count < $numberOfMovies) {
         $actors = $data->getAttribute('title');
         $actors = explode(',', $actors);
         foreach ($actors as $actor) {
-            if (!isset($actorMovie[$actor]))
-                $actorMovie[$actor] = "";
-
-            $actorMovie[$actor] = $actorMovie[$actor] . ',' . $data->textContent;
+            if ($actor == ' ' . $actorName) {
+                $actorMovie[$actorName] = "";
+                $actorMovie[$actorName] = $actorMovie[$actorName] . ',' . $data->textContent;
+            }
         }
     }
     echo ($count + 1) . ") " . $data->textContent . "\n";
     $count++;
 }
 
-
-
 //Displaying the name of movies based on actor.
-if (isset($actorName)) {
+if (isset($actorName) && isset($actorMovie[$actorName])) {
     echo "\n\nMovie " . $actorName . " played in :\n";
-    $name = " " . $actorName;
-    $movies = explode(",", $actorMovie[$name]);
+    $movies = explode(",", $actorMovie[$actorName]);
     $count = 1;
     foreach ($movies as $singleMovie) {
         if ($count != 1)
-            echo ($count-1) . ") " . $singleMovie . "\n";
+            echo ($count - 1) . ") " . $singleMovie . "\n";
         $count++;
     }
+}else {
+    echo "\nThe Actor with name " . $actorName . " dosen't played role in any movies.";
 }
 ?>
 
