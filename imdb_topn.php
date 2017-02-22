@@ -54,17 +54,19 @@ while ($count < $numberOfMovies) {
 }
 
 //Displaying the name of movies based on actor.
-if (isset($actorName) && isset($actorMovie[$actorName])) {
-    echo "\n\nMovie " . $actorName . " played in :\n";
-    $movies = explode(",", $actorMovie[$actorName]);
-    $count = 1;
-    foreach ($movies as $singleMovie) {
-        if ($count != 1)
-            echo ($count - 1) . ") " . $singleMovie . "\n";
-        $count++;
+if (isset($actorName)) {
+    if (isset($actorMovie[$actorName])) {
+        echo "\n\nMovie " . $actorName . " played in :\n";
+        $movies = explode(",", $actorMovie[$actorName]);
+        $count = 1;
+        foreach ($movies as $singleMovie) {
+            if ($count != 1)
+                echo ($count - 1) . ") " . $singleMovie . "\n";
+            $count++;
+        }
+    }else {
+        echo "\nThe Actor with name " . $actorName . " dosen't played role in any movies.";
     }
-}else {
-    echo "\nThe Actor with name " . $actorName . " dosen't played role in any movies.";
 }
 ?>
 
